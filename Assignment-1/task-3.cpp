@@ -267,13 +267,12 @@ public:
 /************************/
 /* priority queue class */
 /************************/
-template <typename T>
 class PriorityQueue{
 private:
     int current_idx{-1};
     int capacity{1000};
     //pair of value and its priority
-    pair<T, int>* array{nullptr};
+    pair<int, int>* array{nullptr};
 
     // Calculate parent index
     int parent(int child_pos) {
@@ -334,11 +333,11 @@ private:
 public:
     // Constructor
     PriorityQueue() {
-        array = new pair<T, int>[capacity];
+        array = new pair<int, int>[capacity];
     }
 
     // Insert element into the heap
-    void push(pair<T, int> data) {
+    void push(pair<int, int> data) {
         assert(!full());
 
         array[++current_idx] = data;
