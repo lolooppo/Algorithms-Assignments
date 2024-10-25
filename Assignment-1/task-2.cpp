@@ -6,8 +6,7 @@
 /*  Sequential Searching functions  */
 /************************************/
 
-template <typename T>
-int sequential_search_iterative(int n, T arr[], T target){
+int sequential_search_iterative(int n, int arr[], int target){
     for(int idx = 0; idx < n; idx++){
         if(arr[idx] == target)
             return idx;
@@ -16,8 +15,7 @@ int sequential_search_iterative(int n, T arr[], T target){
     return -1;
 }
 
-template <typename T>
-int sequential_search_recursive(int n, T arr[], T target, int idx = 0){
+int sequential_search_recursive(int n, int arr[], int target, int idx = 0){
     if(idx == n)
         return -1;
 
@@ -33,8 +31,7 @@ int sequential_search_recursive(int n, T arr[], T target, int idx = 0){
 /*    Binary Searching functions    */
 /************************************/
 
-template <typename T>
-int binary_search_iterative(int n, T arr[], T target){
+int binary_search_iterative(int n, int arr[], int target){
     int left{0}, right{n-1};
 
     while(left <= right){
@@ -52,8 +49,7 @@ int binary_search_iterative(int n, T arr[], T target){
     return -1;
 }
 
-template <typename T>
-int binary_search_recursive(int left, int right, T arr[], T target){
+int binary_search_recursive(int left, int right, int arr[], int target){
     if(left > right)
         return -1;
 
