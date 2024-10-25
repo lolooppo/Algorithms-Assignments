@@ -75,7 +75,7 @@ public:
     minHeap() {
         array = new int[capacity];
     }
-    
+
     // Constructor with vector input
     minHeap(const std :: vector<int>& v) {
         int n = v.size();
@@ -272,7 +272,7 @@ private:
     int current_idx{-1};
     int capacity{1000};
     //pair of value and its priority
-    pair<int, int>* array{nullptr};
+    std :: pair<int, int>* array{nullptr};
 
     // Calculate parent index
     int parent(int child_pos) {
@@ -333,11 +333,11 @@ private:
 public:
     // Constructor
     PriorityQueue() {
-        array = new pair<int, int>[capacity];
+        array = new std :: pair<int, int>[capacity];
     }
 
     // Insert element into the heap
-    void push(pair<int, int> data) {
+    void push(std :: pair<int, int> data) {
         assert(!full());
 
         array[++current_idx] = data;
@@ -395,7 +395,70 @@ public:
 };
 
 
+
+
+// test min heap
+void test_1(){
+    minHeap mh;
+
+    mh.push(2);
+    mh.push(3);
+    mh.push(1);
+    mh.push(-2);
+    mh.push(11);
+
+    // -2 1 2 3 11
+    while(!mh.empty()){
+        std ::  cout    <<  mh.top()    <<  " ";
+        mh.pop();
+    }
+
+    std::cout    <<  std::endl;
+}
+
+// test max heap
+void test_2(){
+    maxHeap mh;
+
+    mh.push(2);
+    mh.push(3);
+    mh.push(1);
+    mh.push(-2);
+    mh.push(11);
+
+    // 11 3 2 1 -2
+    while(!mh.empty()){
+        std ::  cout    <<  mh.top()    <<  " ";
+        mh.pop();
+    }
+
+    std::cout    <<  std::endl;
+}
+
+// test priority queue
+void test_3(){
+    PriorityQueue pq;
+
+    //      {value, priority}
+    pq.push({2   ,  1});
+    pq.push({-12 ,  2});
+    pq.push({5   ,  5});
+    pq.push({121 ,  4});
+    pq.push({3   ,  8});
+
+    // 3 5 121 -12 2
+    while(!pq.empty()){
+        std ::  cout    <<  pq.top()    <<  " ";
+        pq.pop();
+    }
+
+    std::cout    <<  std::endl;
+}
+
 int main(){
 
     // Test the functions here
+    test_1();
+    test_2();
+    test_3();
 }
