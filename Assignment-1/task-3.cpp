@@ -267,28 +267,112 @@ public:
 /************************/
 /* priority queue class */
 /************************/
-class priorityQueue{
+template <typename T>
+class PriorityQueue{
 private:
-    maxHeap mx;
+    int current_idx{-1};
+    int capacity{1000};
+    //pair of value and its priority
+    pair<T, int>* array{nullptr};
+
+    // Calculate parent index
+    int parent(int child_pos) {
+        int parent_pos = (child_pos - 1) / 2;
+        return child_pos ? parent_pos : -1;
+    }
+
+    // Calculate left child index
+    int left(int parent_pos) {
+        int left_child_pos = (2 * parent_pos) + 1;
+        return left_child_pos <= current_idx ? left_child_pos : -1;
+    }
+
+    // Calculate right child index
+    int right(int parent_pos) {
+        int right_child_pos = (2 * parent_pos) + 2;
+        return right_child_pos <= current_idx ? right_child_pos : -1;
+    }
+
+    // Heapify up operation
+    void heapify_up(int child_pos) {
+        int parent_pos = parent(child_pos);
+
+        if (!child_pos || array[child_pos].second < array[parent_pos].second) {
+            return;
+        }
+
+        std :: swap(array[child_pos], array[parent_pos]);
+        heapify_up(parent_pos);
+    }
+
+    // Heapify down operation
+    void heapify_down(int parent_pos) {
+        int left_child_pos = left(parent_pos), right_child_pos = right(parent_pos);
+        int target_pos = left_child_pos;
+
+        if (left_child_pos == -1) {
+            return;
+        }
+
+        if (right_child_pos != -1 && array[right_child_pos].second > array[left_child_pos].second) {
+            target_pos = right_child_pos;
+        }
+
+        if (array[parent_pos].second < array[target_pos].second) {
+            std :: swap(array[parent_pos], array[target_pos]);
+            heapify_down(target_pos);
+        }
+    }
+
+    // Floyd heapify algorithm (from bottom to up and ignores the leaf nodes)
+    void heapify() {
+        for (int i = current_idx / 2; i >= 0; i--) {
+            heapify_down(i);
+        }
+    }
+
 public:
-    void push(int data) {
-        mx.push(data);
+    // Constructor
+    PriorityQueue() {
+        array = new pair<T, int>[capacity];
     }
 
-    int top() {
-        return mx.top();
+    // Insert element into the heap
+    void push(pair<T, int> data) {
+        assert(!full());
+
+        array[++current_idx] = data;
+        heapify_up(current_idx);
     }
 
+    // Remove top element from the heap
     void pop() {
-        mx.pop();
+        assert(!empty());
+
+        std :: swap(array[0], array[current_idx--]);
+        heapify_down(0);
     }
 
+    // Get the top element of the heap
+    int top() {
+        assert(!empty());
+        return array[0].first;
+    }
+
+    // Check if the heap is empty
     bool empty() {
-        return mx.empty();
+        return current_idx == -1;
     }
 
-    bool full(){
-        return mx.full();
+    // Check if the heap is full
+    bool full() {
+        return current_idx == (capacity - 1);
+    }
+
+    // Destructor
+    ~PriorityQueue() {
+        delete [] array;
+        array = nullptr;
     }
 };
 
