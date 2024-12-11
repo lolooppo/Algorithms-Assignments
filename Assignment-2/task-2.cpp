@@ -296,7 +296,7 @@ public:
 
 
 int main() {
-    RedBlackTree tree;
+    RBTree tree;
     
     
     //example from lectures slides
